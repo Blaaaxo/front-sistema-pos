@@ -1,9 +1,22 @@
 "use client"
 import { useAuth } from '@/context/AuthContext';
+import { logout } from '@/services/authService';
+import { useRouter } from 'next/navigation';
 import React from 'react'
 
 export default function Navbar() {
-    const { user, loading } = useAuth();
+    const { user, loading, setUser } = useAuth();
+    const router = useRouter();
+
+    const handleLogout = async () => {
+        try {
+            await logout();
+            setUser(null);
+            router.push('/login');
+        } catch (error) {
+            console.error("Error al cerrar sesión", error);
+        }
+    }
 
     if (loading) {
         return (
@@ -23,7 +36,7 @@ export default function Navbar() {
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <div>
                     {user ? (
-                        <span className="text-gray-900 dark:text-white">Bienvenido, {user.email}</span> 
+                        <span className="text-gray-900 dark:text-white">Bienvenido, {user.email}</span>
                     ) : (
                         <span className="text-gray-900 dark:text-white">no auth</span>
                     )}
@@ -37,7 +50,11 @@ export default function Navbar() {
                 <div className="hidden w-full md:block md:w-auto" id="navbar-default">
                     <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                         <li>
-                            <a href="#" className="block py-2 px-3 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500" aria-current="page">Home</a>
+                            {user && (
+                                <button onClick={handleLogout} className="ml-4 text-red-600">
+                                    Cerrar sesión
+                                </button>
+                            )}
                         </li>
                         <li>
                             <a href="#" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">About</a>

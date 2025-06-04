@@ -21,6 +21,19 @@ export async function login(payload: LoginPayload) {
 }
 
 /**
+ * Realiza una solicitud de cierre de sesión a la API.
+ * @returns Una promesa que resuelve con un mensaje de éxito si el cierre de sesión es exitoso.
+ * @throws Error si ocurre un error al cerrar sesión.
+ */
+export async function logout() {
+  // Realiza una solicitud POST a la API para cerrar sesión
+  return await apiFetch<{ message: string }>("/auth/logout", {
+    method: "POST",
+    credentials: "include",
+  });
+}
+
+/**
  * Realiza una solicitud para obtener los datos del usuario actual.
  * @returns Una promesa que resuelve con los datos del usuario actual si la solicitud es exitosa.
  * @throws Error si ocurre un error al obtener los datos del usuario.
