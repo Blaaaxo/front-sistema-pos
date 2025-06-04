@@ -3,7 +3,7 @@ import { NextResponse, NextRequest } from 'next/server';
 export function middleware(request: NextRequest) {
 
     // revisamos si el usuario tiene un token en las cookies
-    const token = request.cookies.get('token');
+    const token = request.cookies.get('access_token');
 
     // Si no hay token, redirigimos a la página de login
     if (!token && request.nextUrl.pathname.startsWith('/')) {

@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { login } from "@/services/authService"; 
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 /**
  * Componente de formulario de inicio de sesión.
@@ -15,13 +16,16 @@ export default function LoginForm() {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const router = useRouter();
+    const { loadUser } = useAuth();
 
     // Maneja el envío del formulario
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
             await login({ email, password });
+            await loadUser();
             router.push("/");
+            
         } catch (err) {
             console.error("Error durante el login", err);
             setError("Credenciales incorrectas. Por favor, inténtalo de nuevo.");

@@ -1,4 +1,5 @@
 import { apiFetch } from "@/lib/api";
+import { User } from "@/types/user";
 
 interface LoginPayload {
   email: string;
@@ -26,8 +27,8 @@ export async function login(payload: LoginPayload) {
  */
 export async function getCurrentUser() {
   // Realiza una solicitud GET a la API para obtener los datos del usuario actual
-  return await apiFetch("/auth/me", {
-    method: "GET",
+  return await apiFetch<User>("/auth/me", {
+    method: "POST",
     credentials: "include",
   });
 }
