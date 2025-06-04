@@ -3,7 +3,8 @@
 export default function Home() {
   return (
     <div>
-      Dashboard
+      Pagina protegida
+      <p>Esta página está protegida por autenticion.</p>
     </div>
   );
 }
