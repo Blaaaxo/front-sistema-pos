@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { POSLogo } from "../login/pos-logo";
 
 /**
  * Componente de formulario de inicio de sesión.
@@ -38,10 +39,11 @@ export default function LoginForm() {
 
     return (
         <>
-            <Card className="w-full max-w-md">
+            <Card className="w-full max-w-md bg-background">
                 <CardHeader className="space-y-1 text-center">
                     <div className="flex justify-center mb-4">
                         {/* aqui va el logo */}
+                        <POSLogo />
                     </div>
                     <CardTitle className="text-2xl">Twainy POS</CardTitle>
                     <CardDescription>Ingrese sus credenciales para acceder.</CardDescription>
@@ -50,21 +52,24 @@ export default function LoginForm() {
                 <form onSubmit={handleSubmit}>
                     <CardContent className="space-y-4">
                         {error && <p className="text-red-500 mb-4">{error}</p>}
-                        <div className="space-y-2">
+                        <div className="space-y-4">
                             <Label htmlFor="email">Correo electrónico</Label>
                             <Input
                                 type="email"
                                 id="email"
+                                placeholder="ingrese su correo electrónico"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
                             />
                         </div>
-                        <div className="space-y-2">
+                        <div className="space-y-4">
                             <Label htmlFor="password">Contraseña</Label>
                             <Input
+                                className="py-4"
                                 type="password"
                                 id="password"
+                                placeholder="ingrese su contraseña"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
@@ -72,7 +77,7 @@ export default function LoginForm() {
                         </div>
                     </CardContent>
                     <CardFooter>
-                        <Button className="w-full" type="submit" disabled={!loading}>
+                        <Button className="w-full mt-6 py-3" type="submit" disabled={!loading}>
                             {!loading ? "Iniciando sesión..." : "Iniciar Sesión"}
                         </Button>
                     </CardFooter>
